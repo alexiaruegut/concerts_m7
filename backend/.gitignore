@@ -1,0 +1,15 @@
+# Dependencias de Composer (PHP)
+vendor/
+
+# Archivos de entorno
+.env
+
+# Sistemas de edición
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+composer.lock
