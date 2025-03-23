@@ -127,7 +127,6 @@ Password: admin123
 - **Tailwind CSS**
 - **Lucide React** (iconos)
 - **Axios**
-- **React Big Calendar** (calendario)
 
 ### Backend:
 - **PHP** con **PDO**
@@ -135,9 +134,3 @@ Password: admin123
 - **firebase/php-jwt** (autenticación JWT)
 - **vlucas/phpdotenv** (variables de entorno)
 - Middleware CORS manual incluido
-
----
-
-## Créditos
-
-Desarrollado para prácticas de M7 - Desarrollo Full Stack ✨
