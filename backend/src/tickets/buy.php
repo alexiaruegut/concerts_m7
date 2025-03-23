@@ -5,13 +5,11 @@ require_once '../middleware/cors.php';
 
 header('Content-Type: application/json');
 
-// 1. Verificar autenticación
-$user = usuarioAutenticado(); // ← usuario logueado con token
+$user = usuarioAutenticado();
 $usuario_id = $user['id'];
 
 $pdo = getDB();
 
-// 2. Leer datos del body
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (
@@ -25,7 +23,6 @@ if (
     exit;
 }
 
-// 3. Obtener precio del tipo de entrada
 $stmt = $pdo->prepare("SELECT precio FROM tipos_entrada WHERE id = ?");
 $stmt->execute([$data['tipo_entrada_id']]);
 $entrada = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -38,7 +35,6 @@ if (!$entrada) {
 
 $total = $entrada['precio'] * $data['cantidad'];
 
-// 4. Insertar la compra con usuario logueado
 $stmt = $pdo->prepare("
     INSERT INTO compras (usuario_id, tipo_entrada_id, cantidad, total, nombre_comprador, email, telefono)
     VALUES (?, ?, ?, ?, ?, ?, ?)

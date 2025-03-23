@@ -1,5 +1,4 @@
 <?php
-// /tickets/types.php
 require_once '../config/database.php';
 require_once '../middleware/cors.php';
 

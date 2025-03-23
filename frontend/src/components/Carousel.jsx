@@ -13,8 +13,8 @@ const Carousel = () => {
     axios
       .get("http://localhost:8000/concerts/list.php")
       .then((response) => {
-        const threeConcerts = response.data.slice(0, 5);
-        setConcerts(threeConcerts);
+        const allConcerts = response.data;
+        setConcerts(allConcerts);
       })
       .catch((error) => console.error("Error al cargar conciertos:", error));
   }, []);

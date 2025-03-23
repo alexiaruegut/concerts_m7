@@ -1,27 +1,31 @@
 <?php
 require_once '../config/database.php';
-require_once '../middleware/auth.php';
 require_once '../middleware/cors.php';
+require_once '../middleware/auth.php';
 
 header('Content-Type: application/json');
 
-$user = usuarioAutenticado();
-if ($user['rol'] !== 'admin') {
+$usuario = usuarioAutenticado();
+if (!$usuario || $usuario['rol'] !== 'admin') {
     http_response_code(403);
-    echo json_encode(["error" => "No autorizado"]);
+    echo json_encode(['error' => 'Acceso denegado']);
     exit;
 }
 
-$data = json_decode(file_get_contents("php://input"), true);
-
-if (!$data['id']) {
+$id = $_GET['id'] ?? null;
+if (!$id) {
     http_response_code(400);
-    echo json_encode(["error" => "ID de concierto requerido"]);
+    echo json_encode(['error' => 'Falta el parámetro ID']);
     exit;
 }
 
-$pdo = getDB();
-$stmt = $pdo->prepare("DELETE FROM conciertos WHERE id = ?");
-$stmt->execute([$data['id']]);
+try {
+    $pdo = getDB();
+    $stmt = $pdo->prepare("DELETE FROM conciertos WHERE id = ?");
+    $stmt->execute([$id]);
 
-echo json_encode(["message" => "Concierto eliminado correctamente"]);
+    echo json_encode(['success' => true]);
+} catch (PDOException $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Error al borrar concierto', 'detalle' => $e->getMessage()]);
+}

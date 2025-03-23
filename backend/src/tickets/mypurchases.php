@@ -5,7 +5,6 @@ require_once '../middleware/cors.php';
 
 header('Content-Type: application/json');
 
-// Autenticación
 $user = usuarioAutenticado();
 $userId = $user['id'];
 
