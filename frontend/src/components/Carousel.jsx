@@ -1,22 +1,23 @@
-import { useState, useEffect } from "react"
-import axios from "axios"
-import { Swiper, SwiperSlide } from "swiper/react"
-import "swiper/css"
-import "swiper/css/pagination"
-import { Pagination } from "swiper/modules"
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 const Carousel = () => {
-  const [concerts, setConcerts] = useState([])
+  const [concerts, setConcerts] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:8000/concerts/list.php")
       .then((response) => {
-        const threeConcerts = response.data.slice(0, 3)
-        setConcerts(threeConcerts)
+        const threeConcerts = response.data.slice(0, 5);
+        setConcerts(threeConcerts);
       })
-      .catch((error) => console.error("Error al cargar conciertos:", error))
-  }, [])
+      .catch((error) => console.error("Error al cargar conciertos:", error));
+  }, []);
 
   return (
     <div className="w-full h-screen">
@@ -51,7 +52,9 @@ const Carousel = () => {
                   <div className="backdrop-blur-md bg-black/30 border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
                     <div className="p-6 md:p-8">
                       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-                        <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">{concert.nombre}</h3>
+                        <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
+                          {concert.nombre}
+                        </h3>
                         <div className="inline-flex items-center px-4 py-2 rounded-full bg-purple-500/30 backdrop-blur-sm border border-purple-500/40">
                           <span className="inline-block w-4 h-4 mr-2">
                             <svg
@@ -69,7 +72,9 @@ const Carousel = () => {
                               <circle cx="18" cy="16" r="3"></circle>
                             </svg>
                           </span>
-                          <span className="text-purple-200 font-medium">{concert.artista}</span>
+                          <span className="text-purple-200 font-medium">
+                            {concert.artista}
+                          </span>
                         </div>
                       </div>
 
@@ -86,7 +91,14 @@ const Carousel = () => {
                               strokeLinejoin="round"
                               className="text-purple-300"
                             >
-                              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                              <rect
+                                x="3"
+                                y="4"
+                                width="18"
+                                height="18"
+                                rx="2"
+                                ry="2"
+                              ></rect>
                               <line x1="16" y1="2" x2="16" y2="6"></line>
                               <line x1="8" y1="2" x2="8" y2="6"></line>
                               <line x1="3" y1="10" x2="21" y2="10"></line>
@@ -112,19 +124,27 @@ const Carousel = () => {
                               <circle cx="12" cy="10" r="3"></circle>
                             </svg>
                           </span>
-                          <span className="text-white text-lg">{concert.ubicacion}</span>
+                          <span className="text-white text-lg">
+                            {concert.ubicacion}
+                          </span>
                         </div>
                       </div>
 
                       {concert.descripcion && (
-                        <p className="text-gray-200 text-lg mb-8 max-w-3xl">{concert.descripcion}</p>
+                        <p className="text-gray-200 text-lg mb-8 max-w-3xl">
+                          {concert.descripcion}
+                        </p>
                       )}
 
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                        <div className="text-2xl font-bold text-white">Desde 49,99€</div>
-                        <button className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-105 shadow-lg shadow-purple-700/30">
-                          Comprar Entradas
-                        </button>
+                        <div className="text-2xl font-bold text-white">
+                          Entradas BÁSICAS, PREMIUM o VIP
+                        </div>
+                        <Link to="/buytickets">
+                          <button className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-105 shadow-lg shadow-purple-700/30">
+                            Comprar Entradas
+                          </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -136,35 +156,37 @@ const Carousel = () => {
       </Swiper>
 
       <style jsx global>{`
-        body, html {
+        body,
+        html {
           overflow-x: hidden;
           height: 100%;
         }
-        
-        .swiper, .swiper-wrapper, .swiper-slide {
+
+        .swiper,
+        .swiper-wrapper,
+        .swiper-slide {
           height: 100vh;
         }
-        
+
         .swiper-pagination {
           bottom: 20px !important;
           z-index: 20;
         }
-        
+
         .swiper-pagination-bullet {
           width: 12px;
           height: 12px;
           background: rgba(255, 255, 255, 0.5);
           opacity: 1;
         }
-        
+
         .swiper-pagination-bullet-active {
           background: linear-gradient(to right, #9333ea, #ec4899);
           transform: scale(1.2);
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
-export default Carousel
-
+export default Carousel;
