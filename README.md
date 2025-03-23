@@ -1,4 +1,4 @@
-# Conciertos M7
+# ConcertHub
 
 Proyecto **full-stack** que combina:
 - **Backend (PHP)** con autenticación JWT, CRUD de conciertos y endpoints para usuarios.
